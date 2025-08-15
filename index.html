@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="/css/screen.css" rel="stylesheet" />
+    <title>P5.js Sketch</title>
+  </head>
+  <body>
+    <h2>Title</h2>
+    <p>
+      This is an implementation project for the course INFO-F-420 of the ULB.
+    </p>
+    <p>
+      This project was performed by <b>Aloïs Glibert</b> and is an
+      implementation of a "Simon" game, to demonstrate the algorithm detailed in
+      <a href="https://cglab.ca/~morin/publications/ds/entropy-submitted.pdf"
+        >Collete et Al</a
+      >.
+    </p>
+    <h2>Introduction</h2>
+
+    <p>
+      The problem at hand is point location under the probabilistic distrubtion
+      assumption of the query points. This means that we are given the complex
+      polygon, but we also know in advance how the points are going to be
+      distributed.
+    </p>
+    <p>
+      To solve that problem, the authors propose a data structure they call
+      "Triangle Tree". A triangle tree is build such that, at each node, a
+      choice can be made to reduce the possibility space of the point by half,
+      in effect implementing a binary search algorithm.
+    </p>
+    <p>To build the triangle tree, one simply has to :</p>
+    <ol>
+      <li>
+        Find two points, supporting a line that cuts the probability space in
+        half.
+      </li>
+      <li>
+        Iteratively find new points based on the tangent on the previous points,
+        until they have triangulated the polygon
+      </li>
+    </ol>
+
+    <h2>Implementation</h2>
+    <p>
+      I made the simplifying assumption that the probability distribution on the
+      points would be uniform. This made it that the surface became the
+      probability measure.
+    </p>
+
+    <p>
+      From there, I therefore needed to solve the Ham Sandwich problem, for
+      which I took inspiration from
+      <a href="https://doi.org/10.1016/0020-0190(91)90209-Z">this paper</a>. The
+      main implementations where area calculations and point interpolation.
+    </p>
+    <p>
+      This then allowed me to implement the algorithm proper, as explained
+      above. It is used in the project by creating a Triangle Tree per shape,
+      storing that tree in a list, and checking against the list of set
+      elements.
+    </p>
+    <h3>Limitations</h3>
+    <p>
+      Unfortunately, the algorithm is not as efficient as it should. Indeed,
+      <a href="https://cglab.ca/~morin/publications/ds/entropy-submitted.pdf"
+        >the paper</a
+      >
+      makes itself used of point location inside the polygon during the
+      construction, and I unfortunately did not manage to get the time to
+      implement an algorithm in O(log n).
+    </p>
+
+    <h3>Result</h3>
+    <p>
+      Underneath, you can click on the button to get to the Simon game. If the
+      page does not load, a reload usually does the trick ;). The game is
+      implemented so that you are unable to click when the sequence of elements
+      is shown.
+    </p>
+    <a href="game.html">
+      <button>Launch the game</button>
+    </a>
+    <h4>Bibliography</h4>
+    <div
+      class="csl-bib-body"
+      style="line-height: 1.35; margin-left: 2em; text-indent: -2em"
+    >
+      <div class="csl-entry" style="margin-bottom: 1em">
+        Beyer, W. A., and Andrew Zardecki. ‘The Early History of the Ham
+        Sandwich Theorem’. <i>The American Mathematical Monthly</i> 111, no. 1
+        (2004): 58–61.
+        <a href="https://doi.org/10.2307/4145019"
+          >https://doi.org/10.2307/4145019</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.2307%2F4145019&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=The%20Early%20History%20of%20the%20Ham%20Sandwich%20Theorem&amp;rft.jtitle=The%20American%20Mathematical%20Monthly&amp;rft.volume=111&amp;rft.issue=1&amp;rft.aufirst=W.%20A.&amp;rft.aulast=Beyer&amp;rft.au=W.%20A.%20Beyer&amp;rft.au=Andrew%20Zardecki&amp;rft.date=2004&amp;rft.pages=58-61&amp;rft.spage=58&amp;rft.epage=61&amp;rft.issn=0002-9890"
+      ></span>
+      <div class="csl-entry" style="margin-bottom: 1em">
+        Bose, Prosenjit, Erik D. Demaine, Ferran Hurtado, John Iacono, Stefan
+        Langerman, and Pat Morin. ‘Geodesic Ham-Sandwich Cuts’.
+        <i>Discrete &amp; Computational Geometry</i> 37, no. 3 (2007): 325–39.
+        <a href="https://doi.org/10.1007/s00454-006-1287-2"
+          >https://doi.org/10.1007/s00454-006-1287-2</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1007%2Fs00454-006-1287-2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Geodesic%20Ham-Sandwich%20Cuts&amp;rft.jtitle=Discrete%20%26%20Computational%20Geometry&amp;rft.stitle=Discrete%20Comput%20Geom&amp;rft.volume=37&amp;rft.issue=3&amp;rft.aufirst=Prosenjit&amp;rft.aulast=Bose&amp;rft.au=Prosenjit%20Bose&amp;rft.au=Erik%20D.%20Demaine&amp;rft.au=Ferran%20Hurtado&amp;rft.au=John%20Iacono&amp;rft.au=Stefan%20Langerman&amp;rft.au=Pat%20Morin&amp;rft.date=2007-03&amp;rft.pages=325-339&amp;rft.spage=325&amp;rft.epage=339&amp;rft.issn=0179-5376%2C%201432-0444&amp;rft.language=en"
+      ></span>
+      <div class="csl-entry" style="margin-bottom: 1em">
+        Collette, Sébastien, Vida V. Dujmović, John Iacono, Stefan Langerman,
+        and Pat P. Morin. ‘Distribution-Sensitive Point Location in Convex
+        Subdivisions’.
+        <i
+          >Proceedings of the Annual ACM-SIAM Symposium on Discrete
+          Algorithms</i
+        >, 2008, 912–21.
+        <a href="https://cglab.ca/~morin/publications/ds/entropy-submitted.pdf"
+          >https://cglab.ca/~morin/publications/ds/entropy-submitted.pdf</a
+        >
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Distribution-sensitive%20point%20location%20in%20convex%20subdivisions&amp;rft.jtitle=Proceedings%20of%20the%20annual%20ACM-SIAM%20Symposium%20on%20Discrete%20Algorithms&amp;rft.aufirst=S%C3%A9bastien&amp;rft.aulast=Collette&amp;rft.au=S%C3%A9bastien%20Collette&amp;rft.au=Vida%20V.%20Dujmovi%C4%87&amp;rft.au=John%20Iacono&amp;rft.au=Stefan%20Langerman&amp;rft.au=Pat%20P.%20Morin&amp;rft.date=2008&amp;rft.pages=912-921&amp;rft.spage=912&amp;rft.epage=921&amp;rft.issn=1071-9040&amp;rft.language=en"
+      ></span>
+      <div class="csl-entry" style="margin-bottom: 1em">
+        De Berg, Mark, Otfried Cheong, Marc Van Kreveld, and Mark Overmars.
+        <i>Computational Geometry: Algorithms and Applications</i>. Springer
+        Berlin Heidelberg, 2008.
+        <a href="https://doi.org/10.1007/978-3-540-77974-2"
+          >https://doi.org/10.1007/978-3-540-77974-2</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=urn%3Aisbn%3A978-3-540-77973-5%20978-3-540-77974-2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=book&amp;rft.btitle=Computational%20Geometry%3A%20Algorithms%20and%20Applications&amp;rft.place=Berlin%2C%20Heidelberg&amp;rft.publisher=Springer%20Berlin%20Heidelberg&amp;rft.aufirst=Mark&amp;rft.aulast=De%20Berg&amp;rft.au=Mark%20De%20Berg&amp;rft.au=Otfried%20Cheong&amp;rft.au=Marc%20Van%20Kreveld&amp;rft.au=Mark%20Overmars&amp;rft.date=2008&amp;rft.isbn=978-3-540-77973-5%20978-3-540-77974-2&amp;rft.language=en"
+      ></span>
+      <div class="csl-entry" style="margin-bottom: 1em">
+        DÍaz, Matthew, and Joseph O’Rourke. ‘Ham-Sandwich Sectioning of
+        Polygons’. <i>Second Canadian Conference on Computational Geometry</i> 1
+        (June 1990): 282–86.
+        <a href="https://cccg.ca/proceedings/1990/Paper61.pdf"
+          >https://cccg.ca/proceedings/1990/Paper61.pdf</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=proceeding&amp;rft.atitle=Ham-Sandwich%20Sectioning%20of%20Polygons&amp;rft.btitle=Second%20Canadian%20Conference%20on%20Computational%20Geometry&amp;rft.place=Ottawa&amp;rft.aufirst=Matthew&amp;rft.aulast=D%C3%8Daz&amp;rft.au=Matthew%20D%C3%8Daz&amp;rft.au=Joseph%20O'Rourke&amp;rft.date=1990-06-25&amp;rft.pages=282-286&amp;rft.spage=282&amp;rft.epage=286&amp;rft.language=English"
+      ></span>
+      <div class="csl-entry" style="margin-bottom: 1em">
+        Lo, Chi-Yuan, and William Steiger. ‘An Optimal-Time Algorithm for
+        Ham-Sandwich Cuts in the Plane (Abstract)’.
+        <i>Second Canadian Conference on Computational Geometry</i> 1 (June
+        1990): 5–9.
+        <a href="https://cccg.ca/proceedings/1990/Paper02.pdf"
+          >https://cccg.ca/proceedings/1990/Paper02.pdf</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=proceeding&amp;rft.atitle=An%20Optimal-Time%20Algorithm%20for%20Ham-Sandwich%20Cuts%20in%20the%20Plane%20(Abstract)&amp;rft.btitle=Second%20Canadian%20Conference%20on%20Computational%20Geometry&amp;rft.place=Ottawa&amp;rft.aufirst=Chi-Yuan&amp;rft.aulast=Lo&amp;rft.au=Chi-Yuan%20Lo&amp;rft.au=William%20Steiger&amp;rft.date=1990-06-28&amp;rft.pages=5-9&amp;rft.spage=5&amp;rft.epage=9&amp;rft.language=English"
+      ></span>
+      <div class="csl-entry">
+        Stojmenović, Ivan. ‘Bisections and Ham-Sandwich Cuts of Convex Polygons
+        and Polyhedra’. <i>Information Processing Letters</i> 38, no. 1 (1991):
+        15–21.
+        <a href="https://doi.org/10.1016/0020-0190(91)90209-Z"
+          >https://doi.org/10.1016/0020-0190(91)90209-Z</a
+        >.
+      </div>
+      <span
+        class="Z3988"
+        title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fzotero.org%3A2&amp;rft_id=info%3Adoi%2F10.1016%2F0020-0190(91)90209-Z&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Bisections%20and%20ham-sandwich%20cuts%20of%20convex%20polygons%20and%20polyhedra&amp;rft.jtitle=Information%20Processing%20Letters&amp;rft.stitle=Information%20Processing%20Letters&amp;rft.volume=38&amp;rft.issue=1&amp;rft.aufirst=Ivan&amp;rft.aulast=Stojmenovi%C4%87&amp;rft.au=Ivan%20Stojmenovi%C4%87&amp;rft.date=1991-04-12&amp;rft.pages=15-21&amp;rft.spage=15&amp;rft.epage=21&amp;rft.issn=0020-0190"
+      ></span>
+    </div>
+  </body>
+</html>
